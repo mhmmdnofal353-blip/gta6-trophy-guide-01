@@ -14,13 +14,46 @@
 // Outside the grader's container, MAKEFUN_OUTPUT_DIR stands in for /output:
 //   mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts
 
-import { cpSync, existsSync, mkdirSync, writeFileSync } from 'node:fs';
+import { cpSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildDossier } from './vendor/makefun-frontend.ts';
 
 const here = fileURLToPath(new URL('.', import.meta.url));
 const out = process.env.MAKEFUN_OUTPUT_DIR ?? '/output';
+
+// Authored validation pass (Leonida Legend build): refuse to hand in a broken
+// guide. The trophy data must parse, hold exactly the official 55 trophies,
+// and every trophy must carry a non-blank name, description, grade and guide,
+// plus at least one cited source. A failure here throws before anything is
+// copied, so a bad data edit can never reach the scorer unnoticed.
+function validateTrophies(file: string): void {
+  const data = JSON.parse(readFileSync(file, 'utf8'));
+  const list = Array.isArray(data) ? data : data.trophies;
+  if (!Array.isArray(list) || list.length !== 55) {
+    throw new Error(`trophies.json must list exactly 55 trophies, found ${Array.isArray(list) ? list.length : 'none'}`);
+  }
+  const grades = new Set(['platinum', 'gold', 'silver', 'bronze']);
+  const seen = new Set<string>();
+  for (const t of list) {
+    for (const field of ['name', 'description', 'guide'] as const) {
+      if (typeof t[field] !== 'string' || t[field].trim() === '') {
+        throw new Error(`trophy ${JSON.stringify(t.name ?? t.id)} has a blank ${field}`);
+      }
+    }
+    if (!grades.has(t.grade)) throw new Error(`trophy ${t.name} has an unknown grade: ${t.grade}`);
+    if (!Array.isArray(t.sources) || t.sources.length === 0) throw new Error(`trophy ${t.name} cites no sources`);
+    if (seen.has(t.name)) throw new Error(`duplicate trophy name: ${t.name}`);
+    seen.add(t.name);
+  }
+  const tally = list.reduce<Record<string, number>>((acc, t) => ((acc[t.grade] = (acc[t.grade] ?? 0) + 1), acc), {});
+  console.log(
+    `trophies.json OK: 55 trophies (${tally.platinum ?? 0} platinum, ${tally.gold ?? 0} gold, ` +
+      `${tally.silver ?? 0} silver, ${tally.bronze ?? 0} bronze), every guide non-blank and sourced`,
+  );
+}
+
+validateTrophies(join(here, 'app', 'data', 'trophies.json'));
 
 mkdirSync(out, { recursive: true });
 cpSync(join(here, 'app'), join(out, 'app'), { recursive: true });

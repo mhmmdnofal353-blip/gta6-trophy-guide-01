@@ -3,23 +3,150 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GTA VI trophy checklist</title>
+<title>Leonida Legend — GTA VI Trophy Guide &amp; Platinum Tracker</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header>
-  <h1>GTA VI trophy checklist</h1>
-  <p id="progress">0 of 55 earned</p>
+<header class="site-head">
+  <div class="brand">
+    <div class="brand-mark" aria-hidden="true">LL</div>
+    <div>
+      <h1>Leonida Legend</h1>
+      <p class="tagline">Grand Theft Auto VI — trophy guide &amp; platinum tracker · PlayStation 5 · 55 trophies, fully offline</p>
+    </div>
+  </div>
+  <nav class="view-tabs" aria-label="Views">
+    <a href="#/" id="tab-tracker">Tracker</a>
+    <a href="#/roadmap" id="tab-roadmap">Roadmap</a>
+  </nav>
 </header>
-<div class="controls">
-  <label>Grade <select id="grade"><option value="all">All</option><option value="platinum">Platinum</option><option value="gold">Gold</option><option value="silver">Silver</option><option value="bronze">Bronze</option></select></label>
-  <button id="export" type="button">Export progress</button>
-  <label class="import">Import progress <input id="import" type="file" accept="application/json"></label>
-</div>
-<table>
-  <thead><tr><th>Earned</th><th>Trophy</th><th>Grade</th><th>How to get it</th></tr></thead>
-  <tbody id="rows"></tbody>
-</table>
+
+<section class="stats" id="stats" aria-label="Progress">
+  <div class="stat-main">
+    <div class="ring-wrap">
+      <div class="ring" id="ring"><span id="ring-pct">0%</span></div>
+    </div>
+    <div>
+      <p class="stat-big"><span id="stat-earned">0</span> of 55 earned</p>
+      <p class="stat-sub" id="stat-platinum">Platinum progress: 0 of 54</p>
+      <p class="stat-note">Difficulty ≈ 4/10 · ≈ 200 hours · 1 playthrough · no online trophies</p>
+    </div>
+  </div>
+  <ul class="grade-stats">
+    <li><span class="dot dot-platinum"></span>Platinum <strong id="gs-platinum">0/1</strong></li>
+    <li><span class="dot dot-gold"></span>Gold <strong id="gs-gold">0/2</strong></li>
+    <li><span class="dot dot-silver"></span>Silver <strong id="gs-silver">0/6</strong></li>
+    <li><span class="dot dot-bronze"></span>Bronze <strong id="gs-bronze">0/46</strong></li>
+  </ul>
+</section>
+
+<main id="view-tracker">
+  <section class="controls" aria-label="Filters and tools">
+    <label class="ctl grow">Search
+      <input id="search" type="search" placeholder="Name, description or guide text…">
+    </label>
+    <label class="ctl">Grade
+      <select id="f-grade">
+        <option value="all">All grades</option>
+        <option value="platinum">Platinum</option>
+        <option value="gold">Gold</option>
+        <option value="silver">Silver</option>
+        <option value="bronze">Bronze</option>
+      </select>
+    </label>
+    <label class="ctl">Kind
+      <select id="f-kind">
+        <option value="all">All kinds</option>
+        <option value="story">Story</option>
+        <option value="side">Side stories</option>
+        <option value="collectibles">Collectibles</option>
+        <option value="activities">Activities</option>
+        <option value="platinum">Platinum</option>
+      </select>
+    </label>
+    <label class="ctl">Status
+      <select id="f-status">
+        <option value="all">All</option>
+        <option value="earned">Earned</option>
+        <option value="unearned">Not yet earned</option>
+      </select>
+    </label>
+    <label class="check"><input type="checkbox" id="f-missable"> Missable only</label>
+    <label class="check"><input type="checkbox" id="spoiler" checked> Spoiler protection</label>
+    <div class="io-tools">
+      <button id="export" type="button">Export checklist</button>
+      <label class="import-btn">Import<input id="import" type="file" accept="application/json,.json"></label>
+    </div>
+    <p class="io-msg" id="io-msg" role="status"></p>
+  </section>
+
+  <p class="result-count" id="result-count"></p>
+  <div class="cards" id="cards"></div>
+  <p class="empty" id="empty" hidden>No trophies match those filters. Loosen a filter or clear the search.</p>
+
+  <footer class="foot">
+    <p>Guides are written for this tracker in its own words. Every guide cites its sources beside the trophy:
+      <a href="https://www.powerpyx.com/gta-6-grand-theft-auto-vi-trophy-guide-roadmap/">PowerPyx trophy guide &amp; roadmap</a>,
+      <a href="https://outputlag.com/guides/gta-6-trophy-list/">OutputLag trophy list</a> and
+      <a href="https://gta-zone.com/news/gta-6-trophies-achievements/">GTA Zone trophy news</a>.
+      Trophy names, descriptions and grades are the official PlayStation 5 list. Fan-made tracker; no official artwork is used.</p>
+  </footer>
+</main>
+
+<main id="view-roadmap" hidden>
+  <article class="roadmap">
+    <h2>Roadmap to the Platinum</h2>
+    <div class="alert-missable">
+      <h3>⚠ Missable warning — read this first</h3>
+      <p><strong>Positive Mental Attitude</strong> is the one potentially missable trophy. In <strong>Chapter 1</strong>, on a morning
+      after the mission <strong>Down to Earth</strong>, Lucia meditates on the balcony at Jason's house: talk to her in the kitchen,
+      follow her outside and choose <strong>Accept</strong>. The moment is gone for good once Chapter 1 ends, and there is
+      <strong>no mission replay</strong>. It is not yet fully confirmed that this exact meditation is strictly required
+      (there are 18 meditation spots in 10 locations and the 100% checklist needs 15 of 18) — do it anyway and keep a
+      Chapter 1 save until the trophy pops.</p>
+    </div>
+    <ul class="facts">
+      <li><strong>Difficulty:</strong> ≈ 4/10</li>
+      <li><strong>Time to platinum:</strong> ≈ 200 hours</li>
+      <li><strong>Playthroughs:</strong> 1</li>
+      <li><strong>Story:</strong> 5 chapters, ≈ 60–80 hours</li>
+      <li><strong>Online trophies:</strong> none</li>
+      <li><strong>Cheats:</strong> disable trophies and saving — never use them on your trophy save</li>
+    </ul>
+    <section class="step">
+      <h3>Step 1 — Finish the story and its optional missions <span class="hours">≈ 60–80 h</span></h3>
+      <p>Play through all 5 chapters and take optional missions as they appear. Along the way, build habits that pay off later:
+      scan vehicles with the WAiNK app whenever you see a new model (the 100% checklist needs 200 of 277) and study animals
+      through the binoculars (100 of 255 needed). Do the Chapter 1 balcony meditation described in the warning above.
+      Nothing else in the story can lock you out of the platinum.</p>
+    </section>
+    <section class="step">
+      <h3>Step 2 — Post-story 100% checklist + challenges <span class="hours">≈ 100 h</span></h3>
+      <p>After the credits, the 100% checklist unlocks under Progress → Stats → 100% Completion; everything you already did
+      counts toward it. The checklist is only about 60% of true completion — most collectibles are partial — and nothing on
+      it is missable. Complete 70 of the 80 challenges along the way (you may skip the ten hardest), finish all shooting
+      ranges and drone-race locations, and keep scanning vehicles and studying animals until their quotas are met. This step
+      earns the gold trophy <strong>A Long Road</strong>.</p>
+    </section>
+    <section class="step">
+      <h3>Step 3 — Strangers &amp; Freaks finales + misc cleanup <span class="hours">≈ 10 h</span></h3>
+      <p>Side-story finales are not part of the 100% checklist, so mop them up now: the final missions for Andy, Kenton, Billy,
+      Randy and Tyrone, Bret's hunting finale, and eight full Strangers &amp; Freaks strands for the silver of the same name.
+      Then sweep any leftover one-off trophies — the VCIA jet, the Mile Zero tank, five kills in one Combat Focus — and the
+      platinum, <strong>Vice Got a Price!</strong>, unlocks when the 54th trophy lands.</p>
+    </section>
+    <section class="step save-tip">
+      <h3>Save discipline — there is no mission replay</h3>
+      <p>The game gives you 15 manual save slots plus 1 autosave. Keep a manual save at the <strong>start of every chapter</strong>
+      and one untouched save from just before the final mission, then rotate the remaining slots for free-roam cleanup.
+      That habit is your only insurance, since finished missions can never be replayed.</p>
+    </section>
+    <p class="roadmap-src">Roadmap facts and step structure follow the
+      <a href="https://www.powerpyx.com/gta-6-grand-theft-auto-vi-trophy-guide-roadmap/">PowerPyx roadmap</a> and the
+      <a href="https://outputlag.com/guides/gta-6-trophy-list/">OutputLag trophy list</a>, restated in this tracker's own words.</p>
+  </article>
+</main>
+
 <script type="module" src="app.js"></script>
 </body>
 </html>
